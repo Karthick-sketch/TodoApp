@@ -17,19 +17,19 @@ public class UsersController {
     @GetMapping("/user/{id}")
     public ResponseEntity<APIResponse> getUserById(@PathVariable int id) {
         APIResponse apiResponse = userService.findUserById(id);
-        return ResponseEntity.status(apiResponse.getStatusCode()).body(apiResponse);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PostMapping("/user")
     public ResponseEntity<APIResponse> createNewUser(@RequestBody User user) {
         APIResponse apiResponse = userService.createNewUser(user);
-        return ResponseEntity.status(apiResponse.getStatusCode()).body(apiResponse);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @PatchMapping("/user/{id}")
     public ResponseEntity<APIResponse> getUserById(@PathVariable int id, @RequestBody Map<String, Object> fields) {
         APIResponse apiResponse = userService.updateUserByFields(id, fields);
-        return ResponseEntity.status(apiResponse.getStatusCode()).body(apiResponse);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
     @DeleteMapping("/user/{id}")

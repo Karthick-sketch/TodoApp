@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -23,7 +22,7 @@ public class TodoService {
     UserService userService;
 
     public APIResponse findTodosByUserId(int userId) {
-        if (!userService.isUserPresent(userId)) {
+        if (userService.isUserNotPresent(userId)) {
             throw new BadRequestException("Not authorized user");
         }
         APIResponse apiResponse = new APIResponse();
@@ -32,7 +31,7 @@ public class TodoService {
     }
 
     public APIResponse createNewTodo(Todo todo) {
-        if (!userService.isUserPresent(todo.getUserId())) {
+        if (userService.isUserNotPresent(todo.getUserId())) {
             throw new BadRequestException("Not authorized user");
         }
         APIResponse apiResponse = new APIResponse();

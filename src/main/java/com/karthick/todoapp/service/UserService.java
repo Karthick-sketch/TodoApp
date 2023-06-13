@@ -18,8 +18,8 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public boolean isUserPresent(int id) {
-        return userRepository.findById(id).isPresent();
+    public boolean isUserNotPresent(int id) {
+        return userRepository.findById(id).isEmpty();
     }
 
     public APIResponse findUserById(int id) {

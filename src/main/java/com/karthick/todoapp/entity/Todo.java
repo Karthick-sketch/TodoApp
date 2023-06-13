@@ -13,6 +13,16 @@ public class Todo {
     private boolean status;
     private int userId;
 
+    public Todo() {}
+
+    public Todo(int id, String title, long dueDate, boolean status, int userId) {
+        this.id = id;
+        this.title = title;
+        this.dueDate = dueDate;
+        this.status = status;
+        this.userId = userId;
+    }
+
     public int getId() {
         return id;
     }

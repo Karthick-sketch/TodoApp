@@ -1,22 +1,22 @@
 package com.karthick.todoapp.common;
 
 public class APIResponse {
-    private int statusCode;
+    private int status;
     private Object data;
     private Object error;
 
     public APIResponse() {
-        this.statusCode = 200;
+        this.status = 200;
         this.data = null;
         this.error = null;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public int getStatus() {
+        return status;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Object getData() {
