@@ -19,17 +19,22 @@ public class TodoService {
     @Autowired
     TodoRepository todoRepository;
 
+    @Autowired
+    UserService userService;
+
     public APIResponse findTodosByUserId(int userId) {
-        APIResponse apiResponse = new APIResponse();
-        List<Todo> todos = todoRepository.findByUserId(userId);
-        if (todos.isEmpty()) {
-            throw new NoSuchElementException("expecting asset is not found");
+        if (!userService.isUserPresent(userId)) {
+            throw new BadRequestException("Not authorized user");
         }
-        apiResponse.setData(todos);
+        APIResponse apiResponse = new APIResponse();
+        apiResponse.setData(todoRepository.findByUserId(userId));
         return apiResponse;
     }
 
     public APIResponse createNewTodo(Todo todo) {
+        if (!userService.isUserPresent(todo.getUserId())) {
+            throw new BadRequestException("Not authorized user");
+        }
         APIResponse apiResponse = new APIResponse();
         try {
             todo.setStatus(false);
