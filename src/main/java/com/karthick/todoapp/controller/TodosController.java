@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Map;
 
+@CrossOrigin(value = "http://localhost:5173/")
 @RestController
 public class TodosController {
     @Autowired
@@ -17,6 +19,12 @@ public class TodosController {
     @GetMapping("/todos/{userId}")
     public ResponseEntity<APIResponse> getAllTodosByUserId(@PathVariable int userId) {
         APIResponse apiResponse = todoService.findTodosByUserId(userId);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+    }
+
+    @GetMapping("/todos/{sectionId}/{userId}")
+    public ResponseEntity<APIResponse> getTodosByUserIdAndSectionId(@PathVariable int sectionId, @PathVariable int userId) throws ParseException {
+        APIResponse apiResponse = todoService.findTodosByUserIdAndSectionId(sectionId, userId);
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
