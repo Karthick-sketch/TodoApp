@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.Map;
 
 @CrossOrigin(value = "http://localhost:5173/")
 @RestController
@@ -35,10 +34,17 @@ public class TodosController {
     }
 
     @PatchMapping("/todo/{id}")
-    public ResponseEntity<APIResponse> updateTodoStatus(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+    public void updateTodoStatus(@PathVariable int id) {
+        todoService.updateTodoStatus(id);
+    }
+
+/* ---- will do later ----
+    @PatchMapping("/todo/{id}")
+    public ResponseEntity<APIResponse> updateTodoFields(@PathVariable int id, @RequestBody Map<String, Object> fields) {
         APIResponse apiResponse = todoService.updateTodoByFields(id, fields);
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
+*/
 
     @DeleteMapping("/todo/{id}")
     public void deleteTodo(@PathVariable int id) {

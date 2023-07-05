@@ -6,15 +6,11 @@ import com.karthick.todoapp.exception.BadRequestException;
 import com.karthick.todoapp.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -36,7 +32,7 @@ public class TodoService {
     }
 
     private long getTodayDateMillis() throws ParseException {
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date today = dateFormat.parse(dateFormat.format(new Date()));
         return today.getTime();
     }
@@ -48,8 +44,8 @@ public class TodoService {
 
         APIResponse apiResponse = new APIResponse();
         apiResponse.setData(switch (sectionId) {
-            case 1 -> todoRepository.fetchOverdueTodos(userId, getTodayDateMillis());
-            case 2 -> todoRepository.fetchDueTodayTodos(userId, getTodayDateMillis());
+            case 1 -> todoRepository.fetchDueTodayTodos(userId, getTodayDateMillis());
+            case 2 -> todoRepository.fetchOverdueTodos(userId, getTodayDateMillis());
             case 3 -> todoRepository.fetchDueLaterTodos(userId, getTodayDateMillis());
             case 4 -> todoRepository.fetchCompletedTodos(userId);
             default -> throw new BadRequestException("Invalid section id");
@@ -71,6 +67,18 @@ public class TodoService {
         return apiResponse;
     }
 
+    public void updateTodoStatus(int id) {
+        Optional<Todo> todoOptional = todoRepository.findById(id);
+        if (todoOptional.isEmpty()) {
+            throw new NoSuchElementException("todo not found");
+        }
+
+        Todo todo = todoOptional.get();
+        todo.setStatus(!todo.isStatus());
+        todoRepository.save(todo);
+    }
+
+/* ---- will do later ----
     public APIResponse updateTodoByFields(int id, Map<String, Object> fields) {
         Optional<Todo> todo = todoRepository.findById(id);
         if (todo.isEmpty()) {
@@ -91,7 +99,7 @@ public class TodoService {
         }
         return apiResponse;
     }
-
+*/
     public void deleteTodoById(int id) {
         todoRepository.deleteById(id);
     }
