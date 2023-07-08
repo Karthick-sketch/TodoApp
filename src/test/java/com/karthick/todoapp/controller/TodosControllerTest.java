@@ -73,33 +73,15 @@ public class TodosControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.status").value(false))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.userId").value(1));
     }
-/*
+
     @Test
     public void testUpdateTodoStatus() throws Exception {
-        String requestBody = "{ \"title\" : \"Learn Docker\", \"dueDate\" : 1686700800000, \"status\" : true }";
+        Mockito.doNothing().when(todoService).updateTodoStatus(1);
 
-        Todo mockTodo = new Todo(1, "Learn Docker", 1686700800000L, true, 1);
-        APIResponse apiResponse = new APIResponse();
-        apiResponse.setData(mockTodo);
-
-        Map<String, Object> fields = new HashMap<>();
-        fields.put("title", "Learn Docker");
-        fields.put("dueDate", 1686700800000L);
-        fields.put("status", true);
-
-        Mockito.when(todoService.updateTodoStatus(mockTodo.getId())).thenReturn(apiResponse);
-
-        mockMvc.perform(MockMvcRequestBuilders.patch("/todo/{id}", mockTodo.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.id").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.title").value("Learn Docker"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.dueDate").value(1686700800000L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.status").value(true))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.userId").value(1));
+        mockMvc.perform(MockMvcRequestBuilders.patch("/todo/{id}", 1))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
-*/
+
     @Test
     public void testDeleteTodoById() throws Exception {
         Mockito.doNothing().when(todoService).deleteTodoById(1);
