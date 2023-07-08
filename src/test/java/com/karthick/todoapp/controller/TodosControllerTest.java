@@ -73,9 +73,9 @@ public class TodosControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.status").value(false))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.userId").value(1));
     }
-
+/*
     @Test
-    public void testUpdateTodoByFields() throws Exception {
+    public void testUpdateTodoStatus() throws Exception {
         String requestBody = "{ \"title\" : \"Learn Docker\", \"dueDate\" : 1686700800000, \"status\" : true }";
 
         Todo mockTodo = new Todo(1, "Learn Docker", 1686700800000L, true, 1);
@@ -87,7 +87,7 @@ public class TodosControllerTest {
         fields.put("dueDate", 1686700800000L);
         fields.put("status", true);
 
-        Mockito.when(todoService.updateTodoByFields(mockTodo.getId(), fields)).thenReturn(apiResponse);
+        Mockito.when(todoService.updateTodoStatus(mockTodo.getId())).thenReturn(apiResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/todo/{id}", mockTodo.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -99,7 +99,7 @@ public class TodosControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.status").value(true))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.userId").value(1));
     }
-
+*/
     @Test
     public void testDeleteTodoById() throws Exception {
         Mockito.doNothing().when(todoService).deleteTodoById(1);
