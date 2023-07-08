@@ -62,4 +62,17 @@ public class UserService {
         }
         return apiResponse;
     }
+
+    public APIResponse signIn(Map<String, String> cred) {
+        String email = cred.get("email");
+        String pwd = cred.get("password");
+        Map<String, String> user = userRepository.findByEmailAndPassword(email, pwd);
+        if (user.isEmpty()) {
+            throw new BadRequestException("Invalid credentials");
+        }
+
+        APIResponse apiResponse = new APIResponse();
+        apiResponse.setData(user);
+        return apiResponse;
+    }
 }

@@ -21,6 +21,12 @@ public class UsersController {
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
+    @PostMapping("/user/signin")
+    public ResponseEntity<APIResponse> signIn(@RequestBody Map<String, String> cred) {
+        APIResponse apiResponse = userService.signIn(cred);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
+    }
+
     @PostMapping("/user")
     public ResponseEntity<APIResponse> createNewUser(@RequestBody User user) {
         APIResponse apiResponse = userService.createNewUser(user);
