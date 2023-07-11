@@ -28,7 +28,7 @@ public class UserService {
         if (user.isEmpty()) {
             throw new NoSuchElementException("expecting user is not found");
         }
-        apiResponse.setData(user);
+        apiResponse.setData(user.get());
         return apiResponse;
     }
 
@@ -39,10 +39,13 @@ public class UserService {
     }
 
     public void deleteUserById(int id) {
+        if (isUserNotPresent(id)) {
+            throw new NoSuchElementException("expecting user is not found");
+        }
         userRepository.deleteById(id);
     }
 
-    public APIResponse updateUserByFields(int id, Map<String, Object> fields) {
+    public APIResponse updateUserByFields(int id, Map<String, String> fields) {
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
             throw new NoSuchElementException("expecting user is not found");

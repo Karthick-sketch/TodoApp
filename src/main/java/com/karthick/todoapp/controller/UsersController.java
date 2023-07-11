@@ -34,7 +34,7 @@ public class UsersController {
     }
 
     @PatchMapping("/user/{id}")
-    public ResponseEntity<APIResponse> getUserById(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+    public ResponseEntity<APIResponse> getUserById(@PathVariable int id, @RequestBody Map<String, String> fields) {
         APIResponse apiResponse = userService.updateUserByFields(id, fields);
         return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }

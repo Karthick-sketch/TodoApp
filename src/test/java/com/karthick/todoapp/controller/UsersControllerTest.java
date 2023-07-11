@@ -80,7 +80,7 @@ public class UsersControllerTest {
         APIResponse apiResponse = new APIResponse();
         apiResponse.setData(mockUser);
 
-        Map<String, Object> fields = new HashMap<>();
+        Map<String, String> fields = new HashMap<>();
         fields.put("name", "Niko Bellic");
         fields.put("email", "niko.bellic@rockstargames.com");
         fields.put("password", "gtaiv");

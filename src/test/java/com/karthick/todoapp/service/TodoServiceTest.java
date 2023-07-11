@@ -2,7 +2,9 @@ package com.karthick.todoapp.service;
 
 import com.karthick.todoapp.common.APIResponse;
 import com.karthick.todoapp.entity.Todo;
+import com.karthick.todoapp.entity.User;
 import com.karthick.todoapp.repository.TodoRepository;
+import com.karthick.todoapp.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,11 +23,21 @@ public class TodoServiceTest {
     @Mock
     TodoRepository todoRepository;
 
+    @Mock
+    UserRepository userRepository;
+
     @InjectMocks
     TodoService todoService;
 
+    @InjectMocks
+    UserService userService;
+
     private Todo getDummyTodo() {
         return new Todo(1, "Learn Unit Testing", 1686355200000L, false, 1);
+    }
+
+    private Optional<User> getDummyUser() {
+        return Optional.of(new User(1, "Ezio", "ezio@email.com", "ac2"));
     }
 
     @Test
@@ -35,6 +48,8 @@ public class TodoServiceTest {
 
         // Mock the TodoRepository behavior
         Mockito.when(todoRepository.findByUserId(userId)).thenReturn(mockTodos);
+
+        Mockito.when(userRepository.findById(userId)).thenReturn(getDummyUser());
 
         // Call the service method
         APIResponse result = todoService.findTodosByUserId(userId);
