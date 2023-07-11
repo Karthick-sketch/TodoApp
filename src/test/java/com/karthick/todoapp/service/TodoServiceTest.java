@@ -8,7 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.mock.mockito.MockBean;
 
+//import java.util.ArrayList;
+//import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,25 +25,14 @@ public class TodoServiceTest {
     @InjectMocks
     TodoService todoService;
 
-/*
-    @Mock
-    UserRepository userRepository;
-
-    @InjectMocks
-    UserService userService;
-*/
+//    @MockBean
+//    UserService userService;
 
     private Todo getDummyTodo() {
         return new Todo(1, "Learn Unit Testing", 1686355200000L, false, 1);
     }
 
-    /*
-    private Optional<User> getDummyUser() {
-        return Optional.of(new User(1, "Ezio", "ezio@email.com", "ac2"));
-    }
-    */
-
-    /* need to fix
+/* need to find null UserService cause
     @Test
     public void testFindTodosByUserId() {
         int userId = 1;
@@ -49,7 +42,7 @@ public class TodoServiceTest {
         // Mock the TodoRepository behavior
         Mockito.when(todoRepository.findByUserId(userId)).thenReturn(mockTodos);
 
-        Mockito.when(userRepository.findById(userId)).thenReturn(getDummyUser());
+        Mockito.when(userService.isUserNotPresent(userId)).thenReturn(false);
 
         // Call the service method
         APIResponse result = todoService.findTodosByUserId(userId);
@@ -61,14 +54,30 @@ public class TodoServiceTest {
         assertEquals("Learn Unit Testing", resultTodos.get(0).getTitle());
         Mockito.verify(todoRepository, Mockito.times(1)).findByUserId(userId);
     }
-    */
 
-    /* need to find UserService cause
     @Test
     public void testCreateNewUser() {
-        return;
+        int userId = 1;
+        Mockito.when(userService.isUserNotPresent(userId)).thenReturn(false);
+
+        Todo mockTodo1 = getDummyTodo();
+        Todo mockTodo2 = getDummyTodo();
+        Mockito.when(todoRepository.save(mockTodo1)).thenReturn(mockTodo2);
+
+        APIResponse apiResponse = todoService.createNewTodo(mockTodo1);
+        assertNotNull(apiResponse);
+
+        Todo todo = (Todo) apiResponse.getData();
+        assertEquals(1, todo.getId());
+        assertEquals("Learn Unit Testing", todo.getTitle());
+        assertEquals(1686355200000L, todo.getDueDate());
+        assertFalse(todo.getStatus());
+        assertEquals(userId, todo.getUserId());
+
+        Mockito.verify(userService, Mockito.times(1)).isUserNotPresent(userId);
+        Mockito.verify(todoRepository, Mockito.times(1)).save(mockTodo1);
     }
-    */
+*/
 
     @Test
     public void testUpdateTodoStatus() {
@@ -83,14 +92,11 @@ public class TodoServiceTest {
         APIResponse apiResponse = todoService.updateTodoStatus(mockTodoId);
         assertNotNull(apiResponse);
 
-        Todo todo = (Todo) apiResponse.getData();
-        assertEquals(mockTodoId, todo.getId());
-        assertEquals("Learn Unit Testing", todo.getTitle());
-        assertEquals(1686355200000L, todo.getDueDate());
-        assertTrue(todo.getStatus());
-        assertEquals(1, todo.getUserId());
+        Map<String, Boolean> todoStatus = (Map<String, Boolean>) apiResponse.getData();
+        assertTrue(todoStatus.get("status"));
 
         Mockito.verify(todoRepository, Mockito.times(1)).findById(mockTodoId);
+        Mockito.verify(todoRepository, Mockito.times(1)).save(mockTodo1.get());
     }
 
     @Test

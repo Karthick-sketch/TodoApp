@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TodoService {
@@ -73,10 +71,14 @@ public class TodoService {
             throw new NoSuchElementException("todo not found");
         }
 
-        APIResponse apiResponse = new APIResponse();
         Todo todo = todoOptional.get();
         todo.setStatus(!todo.getStatus());
-        apiResponse.setData(todoRepository.save(todo));
+
+        Map<String, Boolean> status = new HashMap<>();
+        status.put("status", todoRepository.save(todo).getStatus());
+
+        APIResponse apiResponse = new APIResponse();
+        apiResponse.setData(status);
         return apiResponse;
     }
 

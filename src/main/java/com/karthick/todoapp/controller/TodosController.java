@@ -34,8 +34,9 @@ public class TodosController {
     }
 
     @PatchMapping("/todo/{id}")
-    public void updateTodoStatus(@PathVariable int id) {
-        todoService.updateTodoStatus(id);
+    public ResponseEntity<APIResponse> updateTodoStatus(@PathVariable int id) {
+        APIResponse apiResponse = todoService.updateTodoStatus(id);
+        return ResponseEntity.status(apiResponse.getStatus()).body(apiResponse);
     }
 
 /* ---- will do later ----
