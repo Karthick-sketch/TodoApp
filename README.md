@@ -1,5 +1,8 @@
 # TodoApp
 
+
+### Todos APIs
+
 ```sh
 curl -XGET 'http://localhost:8080/todos/{user-id}'
 ```
@@ -15,6 +18,8 @@ curl -XPATCH 'http://localhost:8080/todo/{todo-id}'
 ```sh
 curl -XDELETE 'http://localhost:8080/todo/{todo-id}'
 ```
+
+### Users APIs
 
 ```sh
 curl -XGET 'http://localhost:8080/user/{user-id}'
