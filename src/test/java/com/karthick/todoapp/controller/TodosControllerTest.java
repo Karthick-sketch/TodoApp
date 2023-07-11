@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebMvcTest(TodosController.class)
 public class TodosControllerTest {
@@ -74,10 +76,17 @@ public class TodosControllerTest {
 
     @Test
     public void testUpdateTodoStatus() throws Exception {
-        Mockito.doNothing().when(todoService).updateTodoStatus(1);
+        Map<String, Boolean> todoStatus = new HashMap<>();
+        todoStatus.put("status", true);
+
+        APIResponse apiResponse = new APIResponse();
+        apiResponse.setData(todoStatus);
+
+        Mockito.when(todoService.updateTodoStatus(1)).thenReturn(apiResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/todo/{id}", 1))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.status").value(true));
     }
 
     @Test
