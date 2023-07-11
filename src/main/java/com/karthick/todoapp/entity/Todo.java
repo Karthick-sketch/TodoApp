@@ -47,7 +47,7 @@ public class Todo {
         this.dueDate = dueDate;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

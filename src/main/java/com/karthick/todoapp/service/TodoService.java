@@ -67,15 +67,17 @@ public class TodoService {
         return apiResponse;
     }
 
-    public void updateTodoStatus(int id) {
+    public APIResponse updateTodoStatus(int id) {
         Optional<Todo> todoOptional = todoRepository.findById(id);
         if (todoOptional.isEmpty()) {
             throw new NoSuchElementException("todo not found");
         }
 
+        APIResponse apiResponse = new APIResponse();
         Todo todo = todoOptional.get();
-        todo.setStatus(!todo.isStatus());
-        todoRepository.save(todo);
+        todo.setStatus(!todo.getStatus());
+        apiResponse.setData(todoRepository.save(todo));
+        return apiResponse;
     }
 
 /* ---- will do later ----
@@ -100,7 +102,11 @@ public class TodoService {
         return apiResponse;
     }
 */
+
     public void deleteTodoById(int id) {
+        if (todoRepository.findById(id).isEmpty()) {
+            throw new NoSuchElementException("todo not found");
+        }
         todoRepository.deleteById(id);
     }
 }
