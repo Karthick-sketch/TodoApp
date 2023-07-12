@@ -1,5 +1,33 @@
 # TodoApp
 
+### Requirements
+* Java version 17
+* Gradle version 7.6.1
+* MySql version 8
+
+
+### Steps to run the application
+
+Ensure the **MySql** server is running
+```sh
+sudo service mysql status
+```
+
+Create the **todoapp** database in your **MySql** locally
+```sh
+CREATE DATABASE todoapp;
+```
+
+Build the **TodoApp** application using **gradle**
+```sh
+gradle clean build
+```
+
+Now run the **Jar** file using **Java** 
+```sh
+java -jar build/libs/todoapp-0.0.1-SNAPSHOT.jar
+```
+
 
 ### Todos APIs
 
