@@ -8,10 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
 
-//import java.util.ArrayList;
-//import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,17 +21,16 @@ public class TodoServiceTest {
     @Mock
     TodoRepository todoRepository;
 
+    @Mock
+    UserService userService;
+
     @InjectMocks
     TodoService todoService;
-
-//    @MockBean
-//    UserService userService;
 
     private Todo getDummyTodo() {
         return new Todo(1, "Learn Unit Testing", 1686355200000L, false, 1);
     }
 
-/* need to find null UserService cause
     @Test
     public void testFindTodosByUserId() {
         int userId = 1;
@@ -50,8 +48,15 @@ public class TodoServiceTest {
         // Assert the result
         assertNotNull(result);
         List<Todo> resultTodos = (List<Todo>) result.getData();
-        assertEquals(userId, resultTodos.get(0).getId());
-        assertEquals("Learn Unit Testing", resultTodos.get(0).getTitle());
+        for (Todo todo : resultTodos) {
+            assertEquals(1, todo.getId());
+            assertEquals("Learn Unit Testing", todo.getTitle());
+            assertEquals(1686355200000L, todo.getDueDate());
+            assertFalse(todo.getStatus());
+            assertEquals(userId, todo.getUserId());
+        }
+
+        Mockito.verify(userService, Mockito.times(1)).isUserNotPresent(userId);
         Mockito.verify(todoRepository, Mockito.times(1)).findByUserId(userId);
     }
 
@@ -77,7 +82,6 @@ public class TodoServiceTest {
         Mockito.verify(userService, Mockito.times(1)).isUserNotPresent(userId);
         Mockito.verify(todoRepository, Mockito.times(1)).save(mockTodo1);
     }
-*/
 
     @Test
     public void testUpdateTodoStatus() {
