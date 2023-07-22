@@ -1,5 +1,7 @@
 # TodoApp
 
+Front-end repository: [Todo-App-FE](https://github.com/Karthick-sketch/Todo-App-FE)
+
 ### Requirements
 * Java version 17
 * Gradle version 7.6.1
@@ -30,37 +32,64 @@ java -jar build/libs/todoapp-0.0.1-SNAPSHOT.jar
 
 
 ### Todos APIs
-
+Fetch a Todo record by ID
 ```sh
 curl -XGET 'http://localhost:8080/todos/{user-id}'
 ```
 
+Create a new Todo record
 ```sh
-curl -XPOST -d '{"title" : "Learn AWS", "dueDate" : 1688149800000, "userId" : 1}' 'http://localhost:8080/todo/'
+curl --location 'localhost:8080/todo' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json' \
+--data '{
+    "title" : "Learn AWS",
+    "dueDate" : 1686663862675,
+    "userId" : 1
+}
+'
 ```
 
+Update a Todo fields by ID
 ```sh
 curl -XPATCH 'http://localhost:8080/todo/{todo-id}'
 ```
 
+Delete a Todo record by ID
 ```sh
 curl -XDELETE 'http://localhost:8080/todo/{todo-id}'
 ```
 
 ### Users APIs
 
+Fetch a User record by ID
 ```sh
 curl -XGET 'http://localhost:8080/user/{user-id}'
 ```
 
+Create a new User record
 ```sh
-curl -XPOST -d '{"name" : "Ezio", "email" : "ezio@ac.com", "password" : "ac2"}' 'http://localhost:8080/user/{user-id}'
+curl --location 'localhost:8080/user' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name" : "Ezio Auditore",
+    "email" : "ezio.auditore@ubisoft.com",
+    "password" : "ac2"
+}'
 ```
 
+Update a User fields by ID
 ```sh
-curl -XPATCH -d '{"name" : "Ezio Auditore", "email" : "ezio.auditore@ac.com", "password" : "ac2br"}' 'http://localhost:8080/user/{user-id}'
+curl --location --request PATCH 'localhost:8080/user/2' \
+--header 'Accept: application/json' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email" : "ezio@ac.com"
+}'
 ```
 
+Delete a User record by ID
 ```sh
 curl -XDELETE 'http://localhost:8080/user/{user-id}'
 ```
