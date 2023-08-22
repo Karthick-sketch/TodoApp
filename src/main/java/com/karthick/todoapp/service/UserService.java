@@ -69,7 +69,7 @@ public class UserService {
     public APIResponse signIn(Map<String, String> cred) {
         String email = cred.get("email");
         String pwd = cred.get("password");
-        if (email != null && pwd != null) {
+        if (email == null || pwd == null) {
             throw new BadRequestException("Invalid credentials");
         }
         Map<String, String> user = userRepository.findByEmailAndPassword(email, pwd);
